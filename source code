@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gombe Market Assistant</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f3f6f4;
+      color: #19352b;
+    }
+    header {
+      background: #155b43;
+      color: white;
+      padding: 22px 18px;
+    }
+    header h1 { margin: 0 0 8px; font-size: 23px; }
+    header p { margin: 0; }
+    main { max-width: 900px; margin: auto; padding: 18px; }
+    .top {
+      display: flex; justify-content: space-between;
+      align-items: center; gap: 12px; flex-wrap: wrap;
+    }
+    button, select, input {
+      font: inherit; padding: 11px; border-radius: 8px;
+    }
+    button {
+      cursor: pointer; border: 0;
+      background: #155b43; color: white;
+    }
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
+      gap: 12px; margin: 18px 0;
+    }
+    .card, .panel {
+      background: white; border-radius: 12px;
+      padding: 16px; box-shadow: 0 2px 8px #18352b10;
+    }
+    .card p { color: #617269; margin: 0 0 10px; }
+    .card strong { font-size: 20px; overflow-wrap: anywhere; }
+    .panel { margin-bottom: 18px; }
+    h2 { font-size: 19px; margin-top: 0; }
+    form { display: grid; gap: 12px; }
+    label { display: grid; gap: 6px; }
+    input, select {
+      width: 100%; border: 1px solid #ccd8d1;
+      background: white; color: #19352b;
+    }
+    .two { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .entry {
+      border-bottom: 1px solid #e2e9e4;
+      padding: 12px 0; display: flex;
+      justify-content: space-between; gap: 10px;
+    }
+    .entry small { display: block; color: #617269; margin-top: 5px; }
+    .delete { background: #a52b2b; padding: 7px 10px; }
+    .note { font-size: 13px; color: #617269; line-height: 1.5; }
+    @media(max-width: 420px) {
+      .two { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="top">
+      <div>
+        <h1>Gombe Market Assistant</h1>
+        <p id="subtitle">Your small business, better managed.</p>
+      </div>
+      <select id="language" aria-label="Language">
+        <option value="en">English</option>
+        <option value="ha">Hausa</option>
+      </select>
+    </div>
+  </header>
+
+  <main>
+    <h2 id="overview">Business overview</h2>
+
+    <section class="cards">
+      <div class="card">
+        <p id="salesLabel">Total sales</p>
+        <strong id="sales">₦0.00</strong>
+      </div>
+      <div class="card">
+        <p id="expenseLabel">Total expenses</p>
+        <strong id="expenses">₦0.00</strong>
+      </div>
+      <div class="card">
+        <p id="balanceLabel">Sales minus expenses</p>
+        <strong id="balance">₦0.00</strong>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2 id="recordTitle">Record a transaction</h2>
+      <form id="transactionForm">
+        <div class="two">
+          <label>
+            <span id="typeLabel">Transaction type</span>
+            <select id="type">
+              <option value="sale">Sale</option>
+              <option value="expense">Expense</option>
+            </select>
+          </label>
+          <label>
+            <span id="amountLabel">Amount (₦)</span>
+            <input id="amount" type="number" min="0.01"
+              step="0.01" placeholder="e.g. 5000" required>
+          </label>
+        </div>
+        <label>
+          <span id="descriptionLabel">Description</span>
+          <input id="description" maxlength="100"
+            placeholder="e.g. Phone charger sales" required>
+        </label>
+        <button id="saveButton" type="submit">Save transaction</button>
+      </form>
+    </section>
+
+    <section class="panel">
+      <h2 id="historyTitle">Transaction history</h2>
+      <div id="history"></div>
+      <p id="empty" class="note">No transactions yet.</p>
+    </section>
+
+    <p id="privacy" class="note">
+      Prototype: records are stored only in this browser.
+      Clearing browser data may erase them. This is not yet
+      a secure accounting system.
+    </p>
+  </main>
+
+  <script>
+    const translations = {
+      en: {
+        subtitle: "Your small business, better managed.",
+        overview: "Business overview",
+        salesLabel: "Total sales",
+        expenseLabel: "Total expenses",
+        balanceLabel: "Sales minus expenses",
+        recordTitle: "Record a transaction",
+        typeLabel: "Transaction type",
+        sale: "Sale",
+        expense: "Expense",
+        amountLabel: "Amount (₦)",
+        descriptionLabel: "Description",
+        placeholder: "e.g. Phone charger sales",
+        saveButton: "Save transaction",
+        historyTitle: "Transaction history",
+        empty: "No transactions yet.",
+        delete: "Delete",
+        privacy: "Prototype: records are stored only in this browser. Clearing browser data may erase them. This is 
